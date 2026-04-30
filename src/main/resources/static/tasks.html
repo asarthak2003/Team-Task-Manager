@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tasks</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<script src="js/common.js"></script>
+<script>
+    protectPage();
+    renderNavbar();
+</script>
+
+<div class="container">
+    <h2>Tasks</h2>
+
+    <div id="adminTaskForm" style="display:none;">
+        <input id="title" placeholder="Title">
+        <input id="desc" placeholder="Description">
+        <input id="dueDate" type="date">
+        <select id="priority">
+            <option value="HIGH">High Priority</option>
+            <option value="MEDIUM">Medium Priority</option>
+            <option value="LOW">Low Priority</option>
+        </select>
+        <select id="projectId"><option value="">Select Project</option></select>
+        <select id="assignedUserId"><option value="">Assign To User</option></select>
+        <button onclick="createTask()">Add Task</button>
+    </div>
+
+    <div id="taskList"></div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/tasks.js"></script>
+
+</body>
+</html>

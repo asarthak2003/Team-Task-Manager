@@ -1,0 +1,97 @@
+/* Reset */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #333;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-left a {
+    color: white;
+    margin-right: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar-right button {
+    padding: 6px 12px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.navbar-right button:hover {
+    background-color: #e60000;
+}
+
+/* Container */
+.container {
+    width: 400px;
+    margin: 50px auto;
+    background: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* Cards */
+.card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    background-color: #fafafa;
+}
+
+/* Dashboard */
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.dashboard-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 120px;
+    text-align: center;
+    background: #fafafa;
+    border-radius: 4px;
+}
+
+/* Inputs */
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #333;
+    color: white;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #555;
+}

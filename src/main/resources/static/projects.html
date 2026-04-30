@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Projects</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<script src="js/common.js"></script>
+<script>
+    protectPage();
+    renderNavbar();
+</script>
+
+<div class="container">
+    <h2>Projects</h2>
+
+    <div id="adminProjectForm" style="display:none;">
+        <input id="name" placeholder="Project Name">
+        <input id="desc" placeholder="Description">
+        <button onclick="createProject()">Create Project</button>
+    </div>
+
+    <div id="projectList"></div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/projects.js"></script>
+
+</body>
+</html>
