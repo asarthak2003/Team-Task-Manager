@@ -5,11 +5,11 @@ import com.example.teamtaskmanager.entity.User;
 import com.example.teamtaskmanager.service.TaskService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/tasks")
+@CrossOrigin
 public class TaskController {
 
     private final TaskService service;
@@ -26,7 +26,6 @@ public class TaskController {
     public Task create(@RequestBody Task t,
                        @RequestParam Long projectId,
                        @RequestParam Long userId) {
-
         return service.create(t, projectId, userId, getUser());
     }
 

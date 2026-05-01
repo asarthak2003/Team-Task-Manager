@@ -1,1 +1,1 @@
-web: java -jar target/teamtaskmanager-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+web: java -jar target/teamtaskmanager-0.0.1-SNAPSHOT.jar

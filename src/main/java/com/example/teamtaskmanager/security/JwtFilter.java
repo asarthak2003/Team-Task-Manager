@@ -2,47 +2,45 @@ package com.example.teamtaskmanager.security;
 
 import com.example.teamtaskmanager.entity.User;
 import com.example.teamtaskmanager.repository.UserRepository;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Collections;
 
 @Component
-public class JwtFilter extends GenericFilter {
+public class JwtFilter extends OncePerRequestFilter {
 
-    private final JwtUtil jwtUtil = new JwtUtil();
+    private final JwtUtil jwtUtil;
     private final UserRepository userRepo;
 
-    public JwtFilter(UserRepository userRepo) {
+    public JwtFilter(JwtUtil jwtUtil, UserRepository userRepo) {
+        this.jwtUtil = jwtUtil;
         this.userRepo = userRepo;
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
-        HttpServletRequest req = (HttpServletRequest) request;
-        String path = req.getRequestURI();
+        String path = request.getRequestURI();
 
-        if (!path.startsWith("/api")) {
-            chain.doFilter(request, response);
+        // Only intercept /api routes. Ignore everything else (HTML, CSS, JS)
+        if (!path.startsWith("/api") || path.startsWith("/api/auth")) {
+            filterChain.doFilter(request, response);
             return;
         }
 
-        if (path.startsWith("/api/auth")) {
-            chain.doFilter(request, response);
-            return;
-        }
-
-        String header = req.getHeader("Authorization");
+        String header = request.getHeader("Authorization");
 
         if (header == null || !header.startsWith("Bearer ")) {
-            ((HttpServletResponse) response).sendError(
-                    HttpServletResponse.SC_UNAUTHORIZED, "Missing Token");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Missing Token");
             return;
         }
 
@@ -55,18 +53,15 @@ public class JwtFilter extends GenericFilter {
                     .orElseThrow(() -> new RuntimeException("User not found"));
 
             UsernamePasswordAuthenticationToken auth =
-                    new UsernamePasswordAuthenticationToken(
-                            user, null, Collections.emptyList()
-                    );
+                    new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
 
             SecurityContextHolder.getContext().setAuthentication(auth);
 
         } catch (Exception e) {
-            ((HttpServletResponse) response).sendError(
-                    HttpServletResponse.SC_UNAUTHORIZED, "Invalid Token");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Token");
             return;
         }
 
-        chain.doFilter(request, response);
+        filterChain.doFilter(request, response);
     }
 }
